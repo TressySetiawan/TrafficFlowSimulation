@@ -1,7 +1,3 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-
 from trafficSimulator import *
 
 # Create simulation
@@ -33,12 +29,7 @@ sim.create_gen({
     ]
 })
 
-name = st.text_input('Name')
-if not name:
-    st.warning('Please input a name.')
-    win = Window(sim)
-    win.offset = (-150, -110)
-    win.run(steps_per_update=5)
-    st.stop()
-st.success('Thank you for inputting a name.')
-        
+# Start simulation
+win = Window(sim)
+win.offset = (-150, -110)
+win.run(steps_per_update=5)
