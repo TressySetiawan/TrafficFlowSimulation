@@ -41,4 +41,3 @@ if not name:
     win.run(steps_per_update=5)
     st.stop()
 st.success('Thank you for inputting a name.')
-        
