@@ -4,7 +4,7 @@ import sys
 
 sim = Simulation()
 
-def intersection(vehicle_rate, traffic_light_duration) :
+def intersection(vehicle_rate, velocity, traffic_light_duration) :
     # Play with these
     n = 15
     a = 2
@@ -115,11 +115,13 @@ def intersection(vehicle_rate, traffic_light_duration) :
         [3, {'path': [3, 11, 5]}],
         [1, {'path': [3, *road(12+6*n), 4]}],
         [1, {'path': [3, *road(12+7*n), 6]}]
-    ]})
+    ],
+        'velocity' : velocity
+    })
 
     sim.create_signal([[0, 2], [1, 3]], traffic_light_duration)
 
-def roundabout(vehicle_rate) :
+def roundabout(vehicle_rate, velocity) :
     # Play with these
     n = 15
     a = 2
@@ -232,14 +234,15 @@ def roundabout(vehicle_rate) :
             [1, {'path': [3, *road(12+3*n), 8, 4]}],
             [1, {'path': [3, *road(12+3*n), *road(12+7*n), *road(12+4*n), 10, 6]}],
 
-        ]
+        ],
+        'velocity' : velocity
     })
 
 if sys.argv[1] == 'Roundabout' :
-    roundabout(int(sys.argv[2]))
+    roundabout(int(sys.argv[2]), int(sys.argv[3]))
 
 else :
-    intersection(int(sys.argv[2]), int(sys.argv[3]))
+    intersection(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
 
 win = Window(sim)
 win.zoom = 10

@@ -1,5 +1,6 @@
 import pygame
 from pygame import gfxdraw
+from pygame.locals import *
 import numpy as np
 
 class Window:
@@ -26,6 +27,9 @@ class Window:
 
         self.mouse_last = (0, 0)
         self.mouse_down = False
+        # self.car_image = "car.png"
+        self.img_car = pygame.image.load("car_.png")
+        self.car_rect = self.img_car.get_rect()
 
 
     def loop(self, loop=None):
@@ -133,6 +137,9 @@ class Window:
     def box(self, pos, size, color):
         """Draws a rectangle."""
         gfxdraw.box(self.screen, (*pos, *size), color)
+    
+    # def car(self, pos, size, img) :
+
 
     def circle(self, pos, radius, color, filled=True):
         gfxdraw.aacircle(self.screen, *pos, radius, color)
@@ -145,6 +152,8 @@ class Window:
         gfxdraw.aapolygon(self.screen, vertices, color)
         if filled:
             gfxdraw.filled_polygon(self.screen, vertices, color)
+
+    
 
     def rotated_box(self, pos, size, angle=None, cos=None, sin=None, centered=True, color=(0, 0, 255), filled=True):
         """Draws a rectangle center at *pos* with size *size* rotated anti-clockwise by *angle*."""
@@ -169,6 +178,46 @@ class Window:
             )
 
         self.polygon(vertices, color, filled=filled)
+
+    def rotated_car(self, pos, size, angle=None, cos=None, sin=None, centered=True, color=(0, 0, 255), filled=True):
+        """Draws a rectangle center at *pos* with size *size* rotated anti-clockwise by *angle*."""
+        x, y = pos
+        l, h = size
+
+        if angle:
+            cos, sin = np.cos(angle), np.sin(angle)
+        
+        vertex = lambda e1, e2: (
+            x + (e1*l*cos + e2*h*sin)/2,
+            y + (e1*l*sin - e2*h*cos)/2
+        )
+
+        if centered:
+            vertices = self.convert(
+                [vertex(*e) for e in [(-1,-1), (-1, 1), (1,1), (1,-1)]]
+            )
+        else:
+            vertices = self.convert(
+                [vertex(*e) for e in [(0,-1), (0, 1), (2,1), (2,-1)]]
+            )
+
+        self.car(vertices, l, h, x, y, color, filled=filled)
+    
+    def car(self, vertices, l , h, x, y, color, filled=True):
+        # w, h = vertices[2][0] - vertices[0][0], vertices[0][1] - vertices[1][1]
+        rect = self.img_car.get_rect()
+        rect.center = vertices[0][0] + h, vertices[0][1] + l
+        # print(rect.center)
+        # print(x,y)
+        # rect.center = x, y
+        # gfxdraw.textured_polygon(self.screen, vertices, self.img_car.convert_alpha().copy(), 50,50)
+        self.screen.blit(pygame.transform.scale(self.img_car, (20, 10)), rect)
+        # self.screen.blit(self.img_car, rect)
+        # print(vertices)
+        # if filled:
+        #     gfxdraw.filled_polygon(self.screen, vertices, color)
+
+        # pygame.draw.polygon(self.img_car, color, vertices)
 
     def rotated_rect(self, pos, size, angle=None, cos=None, sin=None, centered=True, color=(0, 0, 255)):
         self.rotated_box(pos, size, angle=angle, cos=cos, sin=sin, centered=centered, color=color, filled=False)
@@ -307,8 +356,25 @@ class Window:
         text_fps = self.text_font.render(f't={self.sim.t:.5}', False, (0, 0, 0))
         text_frc = self.text_font.render(f'n={self.sim.frame_count}', False, (0, 0, 0))
         
-        self.screen.blit(text_fps, (0, 0))
-        self.screen.blit(text_frc, (100, 0))
+        # self.screen.blit(text_fps, (0, 0))
+        # self.screen.blit(text_frc, (100, 0))
+
+        n_vehicles = 0
+        total_velocity = 0
+        for road in self.sim.roads:
+            # Draw vehicles
+            n_vehicles += len(road.vehicles)
+            for vehicle in road.vehicles :
+                total_velocity += vehicle.v
+        if n_vehicles == 0 :
+            avg_velocity = 0
+        else :
+            avg_velocity = total_velocity/n_vehicles
+        
+        text_n_vehicle = self.text_font.render(f'Total Vehicles={n_vehicles}', False, (0, 0, 0))
+        text_n_velocity = self.text_font.render(f'Avg Speed={avg_velocity}', False, (0, 0, 0))
+        self.screen.blit(text_n_vehicle, (0, 0))
+        self.screen.blit(text_n_velocity, (0, 30))
 
 
     def draw(self):

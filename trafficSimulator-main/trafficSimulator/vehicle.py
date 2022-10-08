@@ -1,8 +1,9 @@
 import numpy as np
 
 class Vehicle:
-    def __init__(self, config={}):
+    def __init__(self, config={}, velocity=16.6):
         # Set default configuration
+        self.vel = velocity
         self.set_default_config()
 
         # Update configuration
@@ -16,7 +17,7 @@ class Vehicle:
         self.l = 4
         self.s0 = 4
         self.T = 1
-        self.v_max = 16.6
+        self.v_max = self.vel
         self.a_max = 1.44
         self.b_max = 4.61
 
@@ -27,6 +28,9 @@ class Vehicle:
         self.v = self.v_max
         self.a = 0
         self.stopped = False
+
+    def set_v_max(self, x) :
+        self.v_max=x
 
     def init_properties(self):
         self.sqrt_ab = 2*np.sqrt(self.a_max*self.b_max)

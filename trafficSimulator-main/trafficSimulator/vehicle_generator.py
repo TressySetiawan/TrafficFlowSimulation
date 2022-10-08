@@ -33,7 +33,7 @@ class VehicleGenerator:
         for (weight, config) in self.vehicles:
             r -= weight
             if r <= 0:
-                return Vehicle(config)
+                return Vehicle(config, self.velocity)
 
     def update(self):
         """Add vehicles"""
