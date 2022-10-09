@@ -326,8 +326,9 @@ class Window:
         sin, cos = road.angle_sin, road.angle_cos
 
         x = road.start[0] + cos * vehicle.x 
-        y = road.start[1] + sin * vehicle.x 
+        y = road.start[1] + sin * vehicle.x
 
+        #change to rotated_car
         self.rotated_box((x, y), (l, h), cos=cos, sin=sin, centered=True)
 
     def draw_vehicles(self):

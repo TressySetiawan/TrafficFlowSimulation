@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import os
 
+#Set the title of input page
 st.title("Traffic Simulator")
 
 
@@ -20,6 +21,7 @@ if select_type == 'Intersection' :
 submitted = st.button("Submit")
 if submitted:
     st.write("Type : " + select_type)
+    #Run simulation_1.py with submitted values
     if select_type=="Intersection" :
         command_ = "python simulation_1.py "+ str(select_type) + " " + str(slider_val) + " " + str(slider_velocity) + " " + str(duration)
     else :
