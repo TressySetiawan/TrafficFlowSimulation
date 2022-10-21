@@ -1,6 +1,7 @@
 import numpy as np
 from trafficSimulator import *
 import sys
+import asyncio
 
 sim = Simulation()
 
@@ -242,7 +243,7 @@ if sys.argv[1] == 'Roundabout' :
     roundabout(int(sys.argv[2]), int(sys.argv[3]))
 
 else :
-    intersection(int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]))
+    intersection(int(sys.argv[2]), float(sys.argv[3]), int(sys.argv[4]))
 
 win = Window(sim)
 win.zoom = 10

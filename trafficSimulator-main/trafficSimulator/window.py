@@ -1,7 +1,9 @@
 import pygame
 from pygame import gfxdraw
 from pygame.locals import *
+import os
 import numpy as np
+import asyncio
 
 class Window:
     def __init__(self, sim, config={}):
@@ -36,6 +38,8 @@ class Window:
         """Shows a window visualizing the simulation and runs the loop function."""
         
         # Create a pygame window
+        os.environ['SDL_VIDEODRIVER'] = 'windib'
+        os.environ['SDL_VIDEO_WINDOW_POS'] = '%i,%i' % (575,189)
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.flip()
 
@@ -45,7 +49,9 @@ class Window:
         # To draw text
         pygame.font.init()
         self.text_font = pygame.font.SysFont('Lucida Console', 16)
-
+        
+        # pygame.image.save(self.screen, "window.bmp")
+        # os.environ['SDL_VIDEO_CENTERED'] = '0'
         # Draw loop
         running = True
         while running:
@@ -58,6 +64,8 @@ class Window:
             # Update window
             pygame.display.update()
             clock.tick(self.fps)
+            
+            # await asyncio.sleep(0)
 
             # Handle all events
             for event in pygame.event.get():
