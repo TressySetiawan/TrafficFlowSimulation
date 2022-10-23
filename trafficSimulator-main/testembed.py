@@ -20,7 +20,7 @@ def draw():
     pygame.draw.circle(screen, (0,0,0), (250,250), 125)
     pygame.display.update()
 
-button1 = Button(buttonwin,text="Draw",  command=draw)
+button1 = Button(buttonwin,text = 'Draw',  command=draw)
 button1.pack(side=LEFT)
 root.update()
 

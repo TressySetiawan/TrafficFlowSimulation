@@ -94,6 +94,7 @@ def runsim() :
         *EAST_NORTH,
         *NORTH_WEST
     ])
+    print(*WEST_RIGHT_TURN)
 
     def road(a): return range(a, a+n)
 
@@ -122,7 +123,7 @@ def runsim() :
     return sim
 
 # Start simulation
-sim = runsim()
-win = Window(sim)
-win.zoom = 10
-win.run(steps_per_update=5)
+# sim = runsim()
+# win = Window(sim)
+# win.zoom = 10
+# win.run(steps_per_update=5)
