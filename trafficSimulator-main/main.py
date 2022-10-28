@@ -122,7 +122,7 @@ def runsim() :
     return sim
 
 # Start simulation
-sim = runsim()
-win = Window(sim)
-win.zoom = 10
-win.run(steps_per_update=5)
+# sim = runsim()
+# win = Window(sim)
+# win.zoom = 10
+# win.run(steps_per_update=5)

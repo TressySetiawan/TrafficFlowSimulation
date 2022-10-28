@@ -19,12 +19,12 @@ class Window:
         
     def set_default_config(self):
         """Set default configuration"""
-        self.width = 640
-        self.height = 480
+        self.width = 960
+        self.height = 720
         self.bg_color = (250, 250, 250)
 
         self.fps = 60
-        self.zoom = 2
+        self.zoom = 0
         self.offset = (0, 0)
 
         self.mouse_last = (0, 0)
@@ -34,7 +34,7 @@ class Window:
         self.car_rect = self.img_car.get_rect()
 
 
-    def loop(self, loop=None):
+    def loop(self, root, loop=None):
         """Shows a window visualizing the simulation and runs the loop function."""
         
         # Create a pygame window
@@ -62,6 +62,7 @@ class Window:
             self.draw()
 
             # Update window
+            root.update()
             pygame.display.update()
             clock.tick(self.fps)
             
@@ -96,11 +97,11 @@ class Window:
                 elif event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_down = False           
 
-    def run(self, steps_per_update=1):
+    def run(self, root, steps_per_update=1):
         """Runs the simulation by updating in every loop."""
         def loop(sim):
             sim.run(steps_per_update)
-        self.loop(loop)
+        self.loop(root, loop)
 
     def convert(self, x, y=None):
         """Converts simulation coordinates to screen coordinates"""

@@ -2,6 +2,8 @@ import os
 import pygame
 import tkinter as tk
 from tkinter import *
+import main
+from main import *
 
 root = tk.Tk()
 embed = tk.Frame(root, width = 500, height = 500) #creates embed frame for pygame window
@@ -11,19 +13,20 @@ buttonwin = tk.Frame(root, width = 75, height = 500)
 buttonwin.pack(side = LEFT)
 os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
 os.environ['SDL_VIDEODRIVER'] = 'windib'
-screen = pygame.display.set_mode((500,500))
-screen.fill(pygame.Color(255,255,255))
-pygame.display.init()
-pygame.display.update()
+# screen = pygame.display.set_mode((500,500))
+# screen.fill(pygame.Color(255,255,255))
+# pygame.display.init()
+# pygame.display.update()
 
-def draw():
-    pygame.draw.circle(screen, (0,0,0), (250,250), 125)
-    pygame.display.update()
+# def draw():
+#     pygame.draw.circle(screen, (0,0,0), (250,250), 125)
+#     pygame.display.update()
 
-button1 = Button(buttonwin,text = 'Draw',  command=draw)
+button1 = Button(buttonwin,text = 'Draw')
 button1.pack(side=LEFT)
 root.update()
 
-while True:
-    pygame.display.update()
-    root.update()
+sim = runsim()
+win = Window(sim)
+win.zoom = 10
+win.run(steps_per_update=5)
