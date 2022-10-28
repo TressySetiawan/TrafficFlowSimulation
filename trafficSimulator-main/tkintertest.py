@@ -19,6 +19,7 @@ root.resizable(False, False)
 root.title('TrafficFlowSimulator')
 
 process = None
+win = None
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=3)
@@ -49,79 +50,19 @@ def slider_changed_speed(event):
 def slider_changed_light(event):
     value_light_label.configure(text=get_current_light())
 
+def get_stats(sim) :
+    if sim != None :
+        n, avg = sim.get_stats()
+        return [str(n), str(avg)]
+    return ['0','0']
+
 def run_simulation():
-    # global process
-    # if process == None :
-    #     print("heyyo")
-    # else :
-    #     process.terminate()
-    # # pid=os.fork()
-    # command_ = "python simulation_1.py Intersection " + str(get_current_value()) + " " + str(get_current_speed()) + " " + str(get_current_light())
-    # # if pid==0 :
-    # process = subprocess.Popen(command_)
-    #     os.system(command_)
-    # #     exit()
+    global win
     sim = main.runsim()
     win = Window(sim)
     win.zoom = 5
     win.run(root, steps_per_update=5)
-    # def loop(sim) :
-    #     sim.run()
-    # self.screen = pygame.display.set_mode((self.width, self.height))
-    #     pygame.display.flip()
-
-    #     # Fixed fps
-    #     clock = pygame.time.Clock()
-
-    #     # To draw text
-    #     pygame.font.init()
-    #     self.text_font = pygame.font.SysFont('Lucida Console', 16)
-        
-    #     # pygame.image.save(self.screen, "window.bmp")
-    #     # os.environ['SDL_VIDEO_CENTERED'] = '0'
-    #     # Draw loop
-    #     running = True
-    #     while running:
-    #         # Update simulation
-    #         if loop: loop(self.sim)
-
-    #         # Draw simulation
-    #         self.draw()
-
-    #         # Update window
-    #         pygame.display.update()
-    #         clock.tick(self.fps)
-            
-    #         # await asyncio.sleep(0)
-
-    #         # Handle all events
-    #         for event in pygame.event.get():
-    #             # Quit program if window is closed
-    #             if event.type == pygame.QUIT:
-    #                 running = False
-    #             # Handle mouse events
-    #             elif event.type == pygame.MOUSEBUTTONDOWN:
-    #                 # If mouse button down
-    #                 if event.button == 1:
-    #                     # Left click
-    #                     x, y = pygame.mouse.get_pos()
-    #                     x0, y0 = self.offset
-    #                     self.mouse_last = (x-x0*self.zoom, y-y0*self.zoom)
-    #                     self.mouse_down = True
-    #                 if event.button == 4:
-    #                     # Mouse wheel up
-    #                     self.zoom *=  (self.zoom**2+self.zoom/4+1) / (self.zoom**2+1)
-    #                 if event.button == 5:
-    #                     # Mouse wheel down 
-    #                     self.zoom *= (self.zoom**2+1) / (self.zoom**2+self.zoom/4+1)
-    #             elif event.type == pygame.MOUSEMOTION:
-    #                 # Drag content
-    #                 if self.mouse_down:
-    #                     x1, y1 = self.mouse_last
-    #                     x2, y2 = pygame.mouse.get_pos()
-    #                     self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
-    #             elif event.type == pygame.MOUSEBUTTONUP:
-    #                 self.mouse_down = False           
+         
 
 
 
@@ -250,7 +191,6 @@ submit_button.grid(
     row=7,
     columnspan=2
 )
-
 
 embed = tk.Frame(root, width = 960, height = 720) #creates embed frame for pygame window
 embed.grid(row=0, column=4,rowspan=40, columnspan=10) # Adds grid

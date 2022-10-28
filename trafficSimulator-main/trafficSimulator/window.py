@@ -4,6 +4,8 @@ from pygame.locals import *
 import os
 import numpy as np
 import asyncio
+import tkinter as tk
+from tkinter import *
 
 class Window:
     def __init__(self, sim, config={}):
@@ -65,9 +67,18 @@ class Window:
             root.update()
             pygame.display.update()
             clock.tick(self.fps)
-            
             # await asyncio.sleep(0)
-
+            _, text_avg = self.get_stats()
+            avg_speed = ttk.Label(
+                root,
+                text=text_avg
+            )
+            avg_speed.grid(
+                row=10,
+                column=1,
+                columnspan=2,
+                sticky='n'
+            ) 
             # Handle all events
             for event in pygame.event.get():
                 # Quit program if window is closed
@@ -386,6 +397,20 @@ class Window:
         self.screen.blit(text_n_vehicle, (0, 0))
         self.screen.blit(text_n_velocity, (0, 30))
 
+    def get_stats(self) :
+        n_vehicles = 0
+        total_velocity = 0
+        for road in self.sim.roads:
+            # Draw vehicles
+            n_vehicles += len(road.vehicles)
+            for vehicle in road.vehicles :
+                total_velocity += vehicle.v
+        if n_vehicles == 0 :
+            avg_velocity = 0
+        else :
+            avg_velocity = total_velocity/n_vehicles
+        
+        return n_vehicles, avg_velocity
 
     def draw(self):
         # Fill background
