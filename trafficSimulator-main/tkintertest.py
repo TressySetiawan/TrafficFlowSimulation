@@ -74,7 +74,7 @@ slider_label = ttk.Label(
 
 slider_label.grid(
     column=0,
-    row=0,
+    row=2,
     sticky='w'
 )
 
@@ -90,7 +90,7 @@ slider = ttk.Scale(
 
 slider.grid(
     column=1,
-    row=0
+    row=2
     # ,sticky='we'
 )
 
@@ -99,7 +99,7 @@ value_label = ttk.Label(
     text=get_current_value()
 )
 value_label.grid(
-    row=1,
+    row=3,
     column=1,
     columnspan=2,
     sticky='n'
@@ -114,7 +114,7 @@ vehiclespeed_label = ttk.Label(
 
 vehiclespeed_label.grid(
     column=0,
-    row=2,
+    row=4,
     sticky='w'
 )
 
@@ -130,7 +130,7 @@ slider = ttk.Scale(
 
 slider.grid(
     column=1,
-    row=2
+    row=4
     # ,sticky='we'
 )
 
@@ -139,7 +139,7 @@ value_speed_label = ttk.Label(
     text=get_current_speed()
 )
 value_speed_label.grid(
-    row=3,
+    row=5,
     column=1,
     columnspan=2,
     sticky='n'
@@ -154,7 +154,7 @@ trafficlight_label = ttk.Label(
 
 trafficlight_label.grid(
     column=0,
-    row=4
+    row=6
     ,sticky='w'
 )
 
@@ -170,7 +170,7 @@ slider = ttk.Scale(
 
 slider.grid(
     column=1,
-    row=4
+    row=6
     # ,sticky='we'
 )
 
@@ -179,16 +179,32 @@ value_light_label = ttk.Label(
     text=get_current_light()
 )
 value_light_label.grid(
-    row=5,
+    row=7,
     column=1,
     columnspan=2,
     sticky='n'
 )
 
+OPTIONS = [
+            'SIMPANG EMPAT BUAH BATU',
+            'ROUNDABOUT',
+            'SIMPANG LIMA GATOT SUBROTO'
+        ]
+
+variable_ = StringVar(root)
+variable_.set(OPTIONS[0]) # default value
+
+w = OptionMenu(root, variable_, *OPTIONS)
+
+w.grid(
+    row=1,
+    columnspan=2
+)
+
 submit_button = tk.Button(text="Start", command=run_simulation)
 
 submit_button.grid(
-    row=7,
+    row=8,
     columnspan=2
 )
 
@@ -202,61 +218,3 @@ os.environ['SDL_VIDEODRIVER'] = 'windib'
 root.update_idletasks()
 
 root.mainloop()
-
-# """Shows a window visualizing the simulation and runs the loop function."""
-
-# window = Window()        
-# # Create a pygame window
-# self.screen = pygame.display.set_mode((self.width, self.height))
-# pygame.display.flip()
-
-# # Fixed fps
-# clock = pygame.time.Clock()
-
-# # To draw text
-# pygame.font.init()
-# self.text_font = pygame.font.SysFont('Lucida Console', 16)
-
-# # pygame.image.save(self.screen, "window.bmp")
-# os.environ['SDL_VIDEODRIVER'] = 'windib'
-# # Draw loop
-# running = True
-# while running:
-
-#     # Draw simulation
-#     self.draw()
-
-#     # Update window
-#     pygame.display.update()
-#     clock.tick(self.fps)
-    
-#     # await asyncio.sleep(0)
-
-#     # Handle all events
-#     for event in pygame.event.get():
-#         # Quit program if window is closed
-#         if event.type == pygame.QUIT:
-#             running = False
-#         # Handle mouse events
-#         elif event.type == pygame.MOUSEBUTTONDOWN:
-#             # If mouse button down
-#             if event.button == 1:
-#                 # Left click
-#                 x, y = pygame.mouse.get_pos()
-#                 x0, y0 = self.offset
-#                 self.mouse_last = (x-x0*self.zoom, y-y0*self.zoom)
-#                 self.mouse_down = True
-#             if event.button == 4:
-#                 # Mouse wheel up
-#                 self.zoom *=  (self.zoom**2+self.zoom/4+1) / (self.zoom**2+1)
-#             if event.button == 5:
-#                 # Mouse wheel down 
-#                 self.zoom *= (self.zoom**2+1) / (self.zoom**2+self.zoom/4+1)
-#         elif event.type == pygame.MOUSEMOTION:
-#             # Drag content
-#             if self.mouse_down:
-#                 x1, y1 = self.mouse_last
-#                 x2, y2 = pygame.mouse.get_pos()
-#                 self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
-#         elif event.type == pygame.MOUSEBUTTONUP:
-#             self.mouse_down = False

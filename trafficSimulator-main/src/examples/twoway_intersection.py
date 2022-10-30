@@ -4,7 +4,7 @@ from trafficSimulator import *
 sim = Simulation()
 
 # Play with these
-n = 15
+n = 20
 a = 2
 b = 12
 l = 300
@@ -114,6 +114,8 @@ sim.create_gen({
     [1, {'path': [3, *road(12+6*n), 4]}],
     [1, {'path': [3, *road(12+7*n), 6]}]
 ]})
+
+print(road(12+7*n))
 
 sim.create_signal([[0, 2], [1, 3]])
 
