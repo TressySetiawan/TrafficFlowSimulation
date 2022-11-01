@@ -9,6 +9,7 @@ import sys
 import asyncio
 import main
 import subprocess
+from simulations import *
 
 # root window
 
@@ -58,7 +59,7 @@ def get_stats(sim) :
 
 def run_simulation():
     global win
-    sim = main.runsim()
+    sim = simpanglima()
     win = Window(sim)
     win.zoom = 5
     win.run(root, steps_per_update=5)

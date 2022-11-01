@@ -35,8 +35,9 @@ class Simulation:
         return gen
 
     def create_signal(self, roads, duration, config={}):
+        k = len(roads)
         roads = [[self.roads[i] for i in road_group] for road_group in roads]
-        sig = TrafficSignal(roads, duration, config)
+        sig = TrafficSignal(roads, k, duration, config)
         self.traffic_signals.append(sig)
         return sig
 
