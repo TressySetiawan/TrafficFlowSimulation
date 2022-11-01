@@ -68,17 +68,34 @@ class Window:
             pygame.display.update()
             clock.tick(self.fps)
             # await asyncio.sleep(0)
-            _, text_avg = self.get_stats()
+            text_total, text_avg = self.get_stats()
+            txt_avg = "%.3f" % text_avg
+            try :
+                avg_speed.destroy()
+                tot_veh.destroy()
+            except :
+                pass
             avg_speed = ttk.Label(
                 root,
-                text=text_avg
+                text=txt_avg
             )
             avg_speed.grid(
                 row=10,
                 column=1,
                 columnspan=2,
-                sticky='n'
-            ) 
+                sticky='w'
+            )
+
+            tot_veh = ttk.Label(
+                root,
+                text=text_total
+            )
+            tot_veh.grid(
+                row=12,
+                column=1,
+                columnspan=2,
+                sticky='w'
+            )
             # Handle all events
             for event in pygame.event.get():
                 # Quit program if window is closed
@@ -392,10 +409,10 @@ class Window:
         else :
             avg_velocity = total_velocity/n_vehicles
         
-        text_n_vehicle = self.text_font.render(f'Total Vehicles={n_vehicles}', False, (0, 0, 0))
-        text_n_velocity = self.text_font.render(f'Avg Speed={avg_velocity}', False, (0, 0, 0))
-        self.screen.blit(text_n_vehicle, (0, 0))
-        self.screen.blit(text_n_velocity, (0, 30))
+        # text_n_vehicle = self.text_font.render(f'Total Vehicles={n_vehicles}', False, (0, 0, 0))
+        # text_n_velocity = self.text_font.render(f'Avg Speed={avg_velocity}', False, (0, 0, 0))
+        # self.screen.blit(text_n_vehicle, (0, 0))
+        # self.screen.blit(text_n_velocity, (0, 30))
 
     def get_stats(self) :
         n_vehicles = 0

@@ -1,7 +1,7 @@
 import numpy as np
 from trafficSimulator import *
 
-def runsim() :
+def runsim(vehicle_rate, max_vel, light_duration) :
     sim = Simulation()
 
     # Play with these
@@ -98,7 +98,7 @@ def runsim() :
     def road(a): return range(a, a+n)
 
     sim.create_gen({
-        'vehicle_rate': 30,
+        'vehicle_rate': vehicle_rate,
         'vehicles': [
             [2, {'path': [0, *road(12), *road(12+4*n), 10, 6]}],
             [1, {'path': [0, *road(12), 9, 5]}],
@@ -117,7 +117,7 @@ def runsim() :
             [1, {'path': [3, *road(12+3*n), *road(12+7*n), *road(12+4*n), 10, 6]}],
 
         ],
-        'velocity' : 16.6
+        'velocity' : max_vel
     })
     return sim
 

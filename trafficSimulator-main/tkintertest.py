@@ -5,10 +5,7 @@ import pygame
 import os
 import numpy as np
 from trafficSimulator import *
-import sys
-import asyncio
 import main
-import subprocess
 from simulations import *
 
 # root window
@@ -31,6 +28,8 @@ current_value = tk.IntVar()
 current_value_speed = tk.DoubleVar()
 current_traffic_light = tk.IntVar()
 
+def get_road_type():
+    return variable_.get()
 
 def get_current_value():
     return current_value.get()
@@ -54,14 +53,29 @@ def slider_changed_light(event):
 def get_stats(sim) :
     if sim != None :
         n, avg = sim.get_stats()
-        return [str(n), str(avg)]
+        txt_avg = "%.2f" % avg
+        return [str(n), txt_avg]
     return ['0','0']
 
 def run_simulation():
     global win
-    sim = simpanglima()
-    win = Window(sim)
-    win.zoom = 5
+    if get_road_type() == 'SIMPANG EMPAT BUAH BATU' :
+        sim = perempatanbuahbatu(int(get_current_value()), float(get_current_speed()), int(get_current_light()))
+        win = Window(sim)
+        win.zoom = 5
+        win.offset = (-150, -110)
+
+    elif get_road_type() == 'ROUNDABOUT' :
+        sim = main.runsim(int(get_current_value()), float(get_current_speed()), int(get_current_light()))
+        win = Window(sim)
+        win.zoom = 5
+    
+    elif get_road_type() == 'SIMPANG LIMA GATOT SUBROTO' :
+        sim = simpanglima(int(get_current_value()), float(get_current_speed()), int(get_current_light()))
+        win = Window(sim)
+        win.zoom = 3
+        win.offset = (-150, -110)
+    
     win.run(root, steps_per_update=5)
          
 
@@ -209,6 +223,52 @@ submit_button.grid(
     columnspan=2
 )
 
+avgspeed_label = ttk.Label(
+    root,
+    text='Average Speed:'
+)
+
+avgspeed_label.grid(
+    column=0,
+    row=10
+    ,sticky='w'
+)
+
+totalvehicle_label = ttk.Label(
+    root,
+    text='Total Vehicle:'
+)
+
+totalvehicle_label.grid(
+    column=0,
+    row=12
+    ,sticky='w'
+)
+# if win != None :
+#     text_total, text_avg = win.get_stats()
+#     txt_avg = "%.3f" % text_avg
+
+#     avg_speed = ttk.Label(
+#         root,
+#         text=txt_avg
+#     )
+#     avg_speed.grid(
+#         row=10,
+#         column=1,
+#         columnspan=2,
+#         sticky='w'
+#     )
+
+#     tot_veh = ttk.Label(
+#         root,
+#         text=text_total
+#     )
+#     tot_veh.grid(
+#         row=12,
+#         column=1,
+#         columnspan=2,
+#         sticky='w'
+#     )
 embed = tk.Frame(root, width = 960, height = 720) #creates embed frame for pygame window
 embed.grid(row=0, column=4,rowspan=40, columnspan=10) # Adds grid
 # embed.pack() #packs window to the left

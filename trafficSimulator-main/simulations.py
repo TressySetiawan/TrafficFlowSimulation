@@ -1,7 +1,7 @@
 import numpy as np
 from trafficSimulator import *
 
-def simpanglima():
+def simpanglima(vehicle_rate, max_vel, light_duration):
     sim = Simulation()
 
     a = ((300,124), (184,124))
@@ -50,7 +50,7 @@ def simpanglima():
     ])
 
     sim.create_gen({
-        'vehicle_rate': 20,
+        'vehicle_rate': vehicle_rate,
         'vehicles': [
             [1, {"path": [index_road['1'], index_road['2'], index_road['15'], index_road['17']]}],
             [1, {"path": [index_road['16'], index_road['13'], index_road['12'], index_road['9'], index_road['8']]}],
@@ -59,16 +59,16 @@ def simpanglima():
             [1, {"path": [index_road['6'], *index_road['7'], index_road['8']]}],
             [1, {"path": [index_road['1'], index_road['3'], index_road['18'], index_road['9'], index_road['8']]}]
         ],
-        'velocity': 16.6
+        'velocity': max_vel
     })
 
     # sim.create_signal()
 
-    sim.create_signal([[index_road["6"]], [index_road["1"]], [index_road["16"]]], 20)
+    sim.create_signal([[index_road["6"]], [index_road["1"]], [index_road["16"]]], light_duration)
 
     return sim
 
-def perempatanbuahbatu():
+def perempatanbuahbatu(vehicle_rate, max_vel, light_duration):
     # Create simulation
     sim = Simulation()
 
@@ -125,7 +125,7 @@ def perempatanbuahbatu():
     ])
 
     sim.create_gen({
-        'vehicle_rate': 20,
+        'vehicle_rate': vehicle_rate,
         'vehicles': [
             [1, {"path": [0, 1, *index_road["10"], index_road["9"]]}],
             [1, {"path": [0, *range(2,17), 17]}],
@@ -141,11 +141,11 @@ def perempatanbuahbatu():
             [1, {"path": [index_road["11"], index_road["12"], *index_road["23"], list(index_road["5"])[1], index_road["4"]]}],
             [1, {"path": [index_road["16"], index_road["17"], *index_road["24"], list(index_road["10"])[1], index_road["9"]]}]
         ],
-        'velocity' : 16.6
+        'velocity' : max_vel
     })
     print(len(sim.roads))
     print(index_road[str(len(roads))])
 
-    sim.create_signal([[index_road["2"]], [index_road["7"]], [index_road["12"]], [index_road["17"]]], 20)
+    sim.create_signal([[index_road["2"]], [index_road["7"]], [index_road["12"]], [index_road["17"]]], light_duration)
 
     return sim
