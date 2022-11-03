@@ -32,8 +32,8 @@ class Window:
         self.mouse_last = (0, 0)
         self.mouse_down = False
         # self.car_image = "car.png"
-        self.img_car = pygame.image.load("car_.png")
-        self.car_rect = self.img_car.get_rect()
+        # self.img_car = pygame.image.load("car_.png")
+        # self.car_rect = self.img_car.get_rect()
 
 
     def loop(self, root, loop=None):
@@ -219,39 +219,39 @@ class Window:
 
         self.polygon(vertices, color, filled=filled)
 
-    def rotated_car(self, pos, size, angle=None, cos=None, sin=None, centered=True, color=(0, 0, 255), filled=True):
-        """Draws a rectangle center at *pos* with size *size* rotated anti-clockwise by *angle*."""
-        x, y = pos
-        l, h = size
+    # def rotated_car(self, pos, size, angle=None, cos=None, sin=None, centered=True, color=(0, 0, 255), filled=True):
+    #     """Draws a rectangle center at *pos* with size *size* rotated anti-clockwise by *angle*."""
+    #     x, y = pos
+    #     l, h = size
 
-        if angle:
-            cos, sin = np.cos(angle), np.sin(angle)
+    #     if angle:
+    #         cos, sin = np.cos(angle), np.sin(angle)
         
-        vertex = lambda e1, e2: (
-            x + (e1*l*cos + e2*h*sin)/2,
-            y + (e1*l*sin - e2*h*cos)/2
-        )
+    #     vertex = lambda e1, e2: (
+    #         x + (e1*l*cos + e2*h*sin)/2,
+    #         y + (e1*l*sin - e2*h*cos)/2
+    #     )
 
-        if centered:
-            vertices = self.convert(
-                [vertex(*e) for e in [(-1,-1), (-1, 1), (1,1), (1,-1)]]
-            )
-        else:
-            vertices = self.convert(
-                [vertex(*e) for e in [(0,-1), (0, 1), (2,1), (2,-1)]]
-            )
+    #     if centered:
+    #         vertices = self.convert(
+    #             [vertex(*e) for e in [(-1,-1), (-1, 1), (1,1), (1,-1)]]
+    #         )
+    #     else:
+    #         vertices = self.convert(
+    #             [vertex(*e) for e in [(0,-1), (0, 1), (2,1), (2,-1)]]
+    #         )
 
-        self.car(vertices, l, h, x, y, color, filled=filled)
+    #     self.car(vertices, l, h, x, y, color, filled=filled)
     
-    def car(self, vertices, l , h, x, y, color, filled=True):
-        # w, h = vertices[2][0] - vertices[0][0], vertices[0][1] - vertices[1][1]
-        rect = self.img_car.get_rect()
-        rect.center = vertices[0][0] + h, vertices[0][1] + l
-        # print(rect.center)
-        # print(x,y)
-        # rect.center = x, y
-        # gfxdraw.textured_polygon(self.screen, vertices, self.img_car.convert_alpha().copy(), 50,50)
-        self.screen.blit(pygame.transform.scale(self.img_car, (20, 10)), rect)
+    # def car(self, vertices, l , h, x, y, color, filled=True):
+    #     # w, h = vertices[2][0] - vertices[0][0], vertices[0][1] - vertices[1][1]
+    #     rect = self.img_car.get_rect()
+    #     rect.center = vertices[0][0] + h, vertices[0][1] + l
+    #     # print(rect.center)
+    #     # print(x,y)
+    #     # rect.center = x, y
+    #     # gfxdraw.textured_polygon(self.screen, vertices, self.img_car.convert_alpha().copy(), 50,50)
+    #     self.screen.blit(pygame.transform.scale(self.img_car, (20, 10)), rect)
         # self.screen.blit(self.img_car, rect)
         # print(vertices)
         # if filled:
