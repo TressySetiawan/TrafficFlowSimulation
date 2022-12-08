@@ -7,13 +7,14 @@ import numpy as np
 from trafficSimulator import *
 import main
 from simulations import *
+from PIL import ImageTk, Image
 
 # root window
 root = tk.Tk()
 
 root.geometry('1280x720') #720p
 # root.resizable(False, False)
-root.title('TrafficFlowSimulator')
+root.title('Simulasi Lalu Lintas dengan Intelligent Driving Model di Kota Bandung')
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=3)
 
@@ -28,6 +29,18 @@ current_traffic_light = tk.IntVar()
 #retrieve tipe jalan (e.g roundabout, simpang lima, etc)
 def get_road_type():
     return variable_.get()
+
+def option_changed(event):
+    road_opt = get_road_type()
+    if road_opt == 'SIMPANG EMPAT BUAH BATU' :
+        img_ = ImageTk.PhotoImage(Image.open("SimpangEmpatEdited.jpg"))
+        label_img.configure(image = img_)
+        label_img.image = img_
+        # label_img.pack()
+    else :
+        img_ = ImageTk.PhotoImage(Image.open("SimpangLimaEdited.jpg"))
+        label_img.configure(image = img_)
+        label_img.image = img_
 
 #retrieve nilai vehicle rate
 def get_current_value():
@@ -208,7 +221,6 @@ value_light_label.grid(
 
 OPTIONS = [
             'SIMPANG EMPAT BUAH BATU',
-            'ROUNDABOUT',
             'SIMPANG LIMA GATOT SUBROTO'
         ]
 
@@ -216,7 +228,7 @@ variable_ = StringVar(root)
 variable_.set(OPTIONS[0]) # default value
 
 #option menu for road type
-w = OptionMenu(root, variable_, *OPTIONS)
+w = OptionMenu(root, variable_, *OPTIONS, command=option_changed)
 
 w.grid(
     row=1,
@@ -254,6 +266,19 @@ totalvehicle_label.grid(
     row=12
     ,sticky='w'
 )
+
+img_road = tk.Frame(win, width=320, height=210)
+img_road.grid(row=14, column=0,rowspan=20, columnspan=3)
+
+img_ = ImageTk.PhotoImage(Image.open("SimpangEmpatEdited.jpg"))
+
+label_img = Label(img_road, image = img_, width=320, height=210)
+label_img.pack()
+
+
+credit_label = ttk.Label(root,
+                        text="oleh :\nTressy Melani Setiawan \nDr. Putu Harry Gunawan, S.Si., M.Si., M.Sc. \nS1 Informatika \nTelkom University, 2022")
+credit_label.grid(row=36, column=0, columnspan=3)
 # if win != None :
 #     text_total, text_avg = win.get_stats()
 #     txt_avg = "%.3f" % text_avg
